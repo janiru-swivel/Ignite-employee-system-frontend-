@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Here’s an updated **README.md** tailored for your **Next.js** application for the User Management System:
 
-## Getting Started
+```markdown
+# User Management System - Frontend
 
-First, run the development server:
+This is the frontend application for the **User Management System**, built using **Next.js**. It provides an interface to manage users, including features such as creating, viewing, updating, and deleting user records. The application integrates with a backend API for managing user data.
 
+---
+
+## **Features**
+
+- View all users in a responsive table.
+- Add new users through a form.
+- Edit existing user details.
+- Delete users with confirmation dialogs.
+- Notifications for success and error messages using `react-hot-toast`.
+- Fully responsive design using **Bootstrap**.
+
+---
+
+
+---
+
+## **Technologies Used**
+
+- **Next.js**: Framework for building server-rendered React applications.
+- **Axios**: For handling HTTP requests.
+- **Bootstrap**: For responsive UI design.
+- **React Hot Toast**: For toast notifications.
+- **React Query** (optional): For data fetching and state management.
+
+---
+
+## **Setup and Installation**
+
+### Prerequisites
+
+- Node.js (v16+ recommended)
+- npm or yarn
+
+### Steps to Install and Run
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/your-username/user-management-nextjs.git
+   cd user-management-nextjs
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Set Environment Variables**
+   Create a `.env.local` file in the root directory and add your backend API URL:
+   ```env
+   NEXT_PUBLIC_API_URL=http://localhost:8000/api
+   ```
+
+4. **Start the Development Server**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+5. Open your browser and navigate to `http://localhost:3000`.
+
+---
+
+## **Pages and Navigation**
+
+| **Page**           | **Path**          | **Description**                     |
+|---------------------|-------------------|-------------------------------------|
+| Home                | `/`               | Displays a table of users           |
+| Add User            | `/add`            | Form to add a new user              |
+| Edit User           | `/edit/[id]`      | Form to edit an existing user       |
+
+---
+
+## **API Integration**
+
+The application communicates with the following backend API endpoints:
+
+| Endpoint           | Method | Description                |
+|--------------------|--------|----------------------------|
+| `/api/users`       | GET    | Fetch all users            |
+| `/api/user/:id`    | GET    | Fetch user by ID           |
+| `/api/user`        | POST   | Add a new user             |
+| `/api/user/:id`    | PUT    | Update user by ID          |
+| `/api/user/:id`    | DELETE | Delete user by ID          |
+
+---
+
+## **Custom Scripts**
+
+### Development Server
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Build for Production
+```bash
+npm run build
+# or
+yarn build
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
