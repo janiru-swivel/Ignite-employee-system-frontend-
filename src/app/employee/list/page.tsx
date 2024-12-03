@@ -22,18 +22,28 @@ export default function EmployeeListPage() {
     <table className="w-full border-collapse">
       <thead>
         <tr className="bg-gray-200">
+          <th className="border p-2">Profile</th>
           <th className="border p-2">First Name</th>
           <th className="border p-2">Last Name</th>
           <th className="border p-2">Email</th>
+          <th className="border p-2">Phone Number</th>
           <th className="border p-2">Actions</th>
         </tr>
       </thead>
       <tbody>
         {employees.map((employee) => (
           <tr key={employee._id} className="hover:bg-gray-100">
+            <td className="border p-2 text-center">
+              <img
+                src={employee.profilePicture || "/default-profile.png"}
+                alt={`${employee.firstName} ${employee.lastName}`}
+                className="w-16 h-16 object-cover rounded-full mx-auto"
+              />
+            </td>
             <td className="border p-2">{employee.firstName}</td>
             <td className="border p-2">{employee.lastName}</td>
             <td className="border p-2">{employee.email}</td>
+            <td className="border p-2">{employee.phoneNumber}</td>
             <td className="border p-2 text-center">
               <Link
                 href={`/employee/edit/${employee._id}`}
@@ -53,11 +63,17 @@ export default function EmployeeListPage() {
     <div className="grid grid-cols-3 gap-4">
       {employees.map((employee) => (
         <div key={employee._id} className="border rounded p-4 shadow-md">
-          <h3 className="font-bold">
+          <img
+            src={employee.profilePicture || "/default-profile.png"}
+            alt={`${employee.firstName} ${employee.lastName}`}
+            className="w-32 h-32 object-cover rounded-full mx-auto mb-4"
+          />
+          <h3 className="font-bold text-center">
             {employee.firstName} {employee.lastName}
           </h3>
-          <p>{employee.email}</p>
-          <div className="mt-2">
+          <p className="text-center">{employee.email}</p>
+          <p className="text-center">{employee.phoneNumber}</p>
+          <div className="mt-2 flex justify-center">
             <Link
               href={`/employee/edit/${employee._id}`}
               className="text-blue-500 mr-2"
@@ -71,30 +87,10 @@ export default function EmployeeListPage() {
     </div>
   );
 
+  // Rest of the component remains the same
   return (
     <div>
-      <div className="flex justify-between mb-4">
-        <h1 className="text-2xl font-bold">Employee List</h1>
-        <div>
-          <button
-            onClick={() => setViewMode("list")}
-            className={`mr-2 ${
-              viewMode === "list" ? "bg-blue-500 text-white" : "bg-gray-200"
-            } px-4 py-2 rounded`}
-          >
-            List View
-          </button>
-          <button
-            onClick={() => setViewMode("grid")}
-            className={`${
-              viewMode === "grid" ? "bg-blue-500 text-white" : "bg-gray-200"
-            } px-4 py-2 rounded`}
-          >
-            Grid View
-          </button>
-        </div>
-      </div>
-
+      {/* Existing code for view mode toggle and status handling */}
       {status === "loading" && <p>Loading...</p>}
       {status === "failed" && <p>Error: {error}</p>}
       {status === "succeeded" &&

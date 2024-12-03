@@ -17,11 +17,11 @@ export const employeeSchema = z.object({
 
   email: z.string().email({ message: "Invalid email address" }),
 
-  phoneNumber: z
-    .string()
-    .regex(/^(?:\+94|0)?[1-9][0-9]{8}$/, {
-      message: "Invalid Sri Lankan phone number",
-    }),
+  phoneNumber: z.string().regex(/^(?:\+94|0)?[1-9][0-9]{8}$/, {
+    message: "Invalid Sri Lankan phone number",
+  }),
 
   gender: z.enum(["M", "F"], { message: "Gender must be either M or F" }),
+
+  profilePicture: z.string().optional(), // Add this line
 });

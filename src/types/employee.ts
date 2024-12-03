@@ -5,6 +5,7 @@ export interface Employee {
   email: string;
   phoneNumber: string;
   gender: "M" | "F";
+  profilePicture?: string; // Add this line
 }
 
 export interface EmployeeFormData {
@@ -13,4 +14,5 @@ export interface EmployeeFormData {
   email: string;
   phoneNumber: string;
   gender: "M" | "F";
+  profilePicture?: string; // Add this line
 }

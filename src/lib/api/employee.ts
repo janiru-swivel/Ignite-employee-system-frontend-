@@ -15,12 +15,30 @@ export const employeeApi = {
   },
 
   async createEmployee(data: EmployeeFormData): Promise<Employee> {
-    const response = await axios.post(`${BASE_URL}/user`, data);
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      formData.append(key, data[key as keyof EmployeeFormData] as string);
+    });
+
+    const response = await axios.post(`${BASE_URL}/user`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
     return response.data.data;
   },
 
   async updateEmployee(id: string, data: EmployeeFormData): Promise<Employee> {
-    const response = await axios.put(`${BASE_URL}/update/user/${id}`, data);
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      formData.append(key, data[key as keyof EmployeeFormData] as string);
+    });
+
+    const response = await axios.put(
+      `${BASE_URL}/update/user/${id}`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
     return response.data.data;
   },
 
