@@ -13,6 +13,6 @@ export interface EmployeeFormData {
   lastName: string;
   email: string;
   phoneNumber: string;
-  gender: "M" | "F";
-  profilePicture?: string; // Add this line
+  gender: string; // Add this
+  profilePicture?: string;
 }

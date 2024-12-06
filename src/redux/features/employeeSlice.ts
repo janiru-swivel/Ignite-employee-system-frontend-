@@ -14,10 +14,15 @@ export const fetchEmployees = createAsyncThunk(
 // Add employee
 export const addEmployee = createAsyncThunk(
   "employees/addEmployee",
-  async (employee: Omit<Employee, "_id">) => {
+  async (employee: FormData) => {
     const response = await axios.post(
       "http://localhost:8000/api/user",
-      employee
+      employee,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
     return response.data;
   }
@@ -26,9 +31,13 @@ export const addEmployee = createAsyncThunk(
 // Delete employee
 export const deleteEmployee = createAsyncThunk(
   "employees/deleteEmployee",
-  async (id: string) => {
-    await axios.delete(`http://localhost:8000/api/user/${id}`);
-    return id;
+  async (id: string, { rejectWithValue }) => {
+    try {
+      await axios.delete(`http://localhost:8000/api/user/${id}`);
+      return id;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || "An error occurred");
+    }
   }
 );
 
@@ -60,7 +69,10 @@ const employeeSlice = createSlice({
       })
       .addCase(fetchEmployees.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message || null;
+        state.error =
+          typeof action.error.message === "string"
+            ? action.error.message
+            : "An error occurred";
       })
 
       // Add employee
@@ -73,6 +85,12 @@ const employeeSlice = createSlice({
         state.employees = state.employees.filter(
           (employee) => employee._id !== action.payload
         );
+      })
+      .addCase(deleteEmployee.rejected, (state, action) => {
+        state.error =
+          typeof action.payload === "string"
+            ? action.payload
+            : "Failed to delete the employee.";
       });
   },
 });
