@@ -34,9 +34,8 @@ export default function AddEmployee() {
   const handleProfilePictureChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-
+    const file = e.target.files?.[0]; // Use optional chaining to access the first file
+    if (file) {
       // Create a preview of the profile picture
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -111,8 +110,11 @@ export default function AddEmployee() {
         </div>
 
         <div className="flex flex-col space-y-2">
-          <label className="font-medium text-gray-700">Gender</label>
+          <label htmlFor="gender" className="font-medium text-gray-700">
+            Gender
+          </label>
           <select
+            id="gender" // Associating with the label via id
             {...register("gender")}
             className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
           >
@@ -126,8 +128,11 @@ export default function AddEmployee() {
         </div>
 
         <div className="flex flex-col space-y-2">
-          <label className="font-medium text-gray-700">Profile Picture</label>
+          <label htmlFor="profilePicture" className="font-medium text-gray-700">
+            Profile Picture
+          </label>
           <input
+            id="profilePicture" // Associating with the label via id
             type="file"
             accept="image/*"
             onChange={handleProfilePictureChange}

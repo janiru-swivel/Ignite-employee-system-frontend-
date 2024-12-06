@@ -70,12 +70,12 @@ export default function EmployeeListPage() {
       <tbody>
         {filteredEmployees.map((employee, index) => (
           <tr
-            key={employee._id || index} // Fallback to `index` if `_id` is undefined
+            key={employee._id ?? index} // Fallback to `index` if `_id` is null or undefined
             className="hover:bg-gray-100 transition-all duration-300"
           >
             <td className="border p-4 text-center">
               <img
-                src={employee.profilePicture || "/default-profile.png"}
+                src={employee.profilePicture ?? "/default-profile.png"}
                 alt={`${employee.firstName} ${employee.lastName}`}
                 className="w-16 h-16 object-cover rounded-full mx-auto shadow-md"
               />
@@ -118,10 +118,16 @@ export default function EmployeeListPage() {
           className="border rounded-lg shadow-xl bg-gradient-to-r from-green-200 to-grey-600 hover:scale-105 transition-all duration-300 overflow-hidden"
         >
           <img
-            src={employee.profilePicture || "/default-profile.png"}
-            alt={`${employee.firstName} ${employee.lastName}`}
+            src={employee?.profilePicture ?? "/default-profile.png"}
+            alt={
+              employee?.firstName && employee?.lastName
+                ? `${employee.firstName} ${employee.lastName}`
+                : "Default profile picture"
+            }
             className="w-32 h-32 object-cover rounded-full mx-auto mt-6 border-4 border-white shadow-md"
+            loading="lazy"
           />
+
           <div className="p-6 text-center space-y-4">
             <h3 className="text-xl font-semibold text-black">
               {employee.firstName} {employee.lastName}
@@ -219,14 +225,14 @@ export default function EmployeeListPage() {
       )}
       {status === "succeeded" && (
         <>
-          {filteredEmployees.length === 0 ? (
+          {filteredEmployees.length === 0 && (
             <div className="text-center text-xl font-semibold text-gray-500">
               No employees found.
             </div>
-          ) : viewMode === "list" ? (
-            renderListView()
-          ) : (
-            renderGridView()
+          )}
+
+          {filteredEmployees.length > 0 && (
+            <>{viewMode === "list" ? renderListView() : renderGridView()}</>
           )}
         </>
       )}

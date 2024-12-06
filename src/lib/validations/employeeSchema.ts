@@ -17,7 +17,7 @@ export const employeeSchema = z.object({
 
   email: z.string().email({ message: "Invalid email address" }),
 
-  phoneNumber: z.string().regex(/^(?:\+94|0)?[1-9][0-9]{8}$/, {
+  phoneNumber: z.string().regex(/^(?:\+94|0)?\d{9}$/, {
     message: "Invalid Sri Lankan phone number",
   }),
 

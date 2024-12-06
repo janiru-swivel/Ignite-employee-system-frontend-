@@ -5,8 +5,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { employeeSchema } from "@/lib/validations/employeeSchema";
 import { EmployeeFormData } from "@/types/employee";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/redux/store";
 import { useRouter } from "next/navigation";
 import { successToast, errorToast } from "@/utils/toastConfig";
 import Input from "@/components/ui/Input";
@@ -14,14 +12,13 @@ import Button from "@/components/ui/Button";
 import { employeeApi } from "@/lib/api/employee";
 
 interface EditEmployeeFormProps {
-  employeeId: string;
+  readonly employeeId: string; // Marked as readonly
 }
 
 export default function EditEmployeeForm({
   employeeId,
 }: EditEmployeeFormProps) {
   const router = useRouter();
-  const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [fetchError, setFetchError] = useState(false);
@@ -97,7 +94,14 @@ export default function EditEmployeeForm({
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-6 max-w-lg mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-200 transition-all duration-300 hover:shadow-xl"
       >
+        <label
+          htmlFor="firstName"
+          className="block text-lg font-medium text-gray-700"
+        >
+          First Name
+        </label>
         <Input
+          id="firstName" // Added id
           label="First Name"
           type="text"
           placeholder="Enter first name"
@@ -105,7 +109,15 @@ export default function EditEmployeeForm({
           error={errors.firstName?.message}
           className="transition-all duration-300 focus:ring-2 focus:ring-blue-500"
         />
+
+        <label
+          htmlFor="lastName"
+          className="block text-lg font-medium text-gray-700"
+        >
+          Last Name
+        </label>
         <Input
+          id="lastName" // Added id
           label="Last Name"
           type="text"
           placeholder="Enter last name"
@@ -113,7 +125,15 @@ export default function EditEmployeeForm({
           error={errors.lastName?.message}
           className="transition-all duration-300 focus:ring-2 focus:ring-blue-500"
         />
+
+        <label
+          htmlFor="email"
+          className="block text-lg font-medium text-gray-700"
+        >
+          Email
+        </label>
         <Input
+          id="email" // Added id
           label="Email"
           type="email"
           placeholder="Enter email"
@@ -121,7 +141,15 @@ export default function EditEmployeeForm({
           error={errors.email?.message}
           className="transition-all duration-300 focus:ring-2 focus:ring-blue-500"
         />
+
+        <label
+          htmlFor="phoneNumber"
+          className="block text-lg font-medium text-gray-700"
+        >
+          Phone Number
+        </label>
         <Input
+          id="phoneNumber" // Added id
           label="Phone Number"
           type="tel"
           placeholder="Enter phone number"
@@ -129,12 +157,17 @@ export default function EditEmployeeForm({
           error={errors.phoneNumber?.message}
           className="transition-all duration-300 focus:ring-2 focus:ring-blue-500"
         />
+
         <div className="space-y-2">
-          <label className="block text-lg font-medium text-gray-700">
+          <label
+            htmlFor="gender"
+            className="block text-lg font-medium text-gray-700"
+          >
             Gender
           </label>
           <select
             {...register("gender")}
+            id="gender" // Added id
             className="w-full p-3 border rounded-lg bg-gray-50 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
           >
             <option value="">Select Gender</option>
