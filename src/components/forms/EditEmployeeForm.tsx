@@ -35,7 +35,7 @@ export default function EditEmployeeForm({
     resolver: zodResolver(employeeSchema),
   });
 
-  // Move fetchEmployeeData outside of useEffect for reuse
+  // Fetch employee data by ID
   const fetchEmployeeData = async () => {
     try {
       setFetchError(false);
@@ -53,7 +53,7 @@ export default function EditEmployeeForm({
     }
   };
 
-  // Call fetchEmployeeData in useEffect
+  // Fetch employee data on component mount or when employeeId changes
   useEffect(() => {
     fetchEmployeeData();
   }, [employeeId, setValue]);
@@ -72,14 +72,19 @@ export default function EditEmployeeForm({
   };
 
   if (loading) {
-    return <p className="text-center">Loading employee data...</p>;
+    return (
+      <p className="text-center text-gray-600">Loading employee data...</p>
+    );
   }
 
   if (fetchError) {
     return (
       <div className="text-center">
         <p className="text-red-500">Failed to fetch employee data.</p>
-        <Button onClick={fetchEmployeeData} className="mt-4">
+        <Button
+          onClick={fetchEmployeeData}
+          className="mt-4 w-full bg-red-600 text-white hover:bg-red-700"
+        >
           Retry
         </Button>
       </div>
@@ -87,64 +92,77 @@ export default function EditEmployeeForm({
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-4 max-w-md mx-auto"
-    >
-      <Input
-        label="First Name"
-        type="text"
-        placeholder="Enter first name"
-        {...register("firstName")}
-        error={errors.firstName?.message}
-      />
-      <Input
-        label="Last Name"
-        type="text"
-        placeholder="Enter last name"
-        {...register("lastName")}
-        error={errors.lastName?.message}
-      />
-      <Input
-        label="Email"
-        type="email"
-        placeholder="Enter email"
-        {...register("email")}
-        error={errors.email?.message}
-      />
-      <Input
-        label="Phone Number"
-        type="tel"
-        placeholder="Enter phone number"
-        {...register("phoneNumber")}
-        error={errors.phoneNumber?.message}
-      />
-      <div>
-        <label className="block mb-2">Gender</label>
-        <select
-          {...register("gender")}
-          className="w-full p-2 border rounded focus:ring focus:outline-none"
-        >
-          <option value="">Select Gender</option>
-          <option value="M">Male</option>
-          <option value="F">Female</option>
-        </select>
-        {errors.gender && (
-          <p className="text-red-500 text-sm mt-1">{errors.gender.message}</p>
-        )}
-      </div>
-      <div className="flex space-x-4">
-        <Button type="submit" disabled={isSubmitting} className="w-full">
-          {isSubmitting ? "Updating..." : "Update Employee"}
-        </Button>
-        <Button
-          type="button"
-          onClick={() => router.push("/employee/list")}
-          className="w-full bg-gray-300 text-black"
-        >
-          Cancel
-        </Button>
-      </div>
-    </form>
+    <div className="container mx-auto p-6">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-6 max-w-lg mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-200 transition-all duration-300 hover:shadow-xl"
+      >
+        <Input
+          label="First Name"
+          type="text"
+          placeholder="Enter first name"
+          {...register("firstName")}
+          error={errors.firstName?.message}
+          className="transition-all duration-300 focus:ring-2 focus:ring-blue-500"
+        />
+        <Input
+          label="Last Name"
+          type="text"
+          placeholder="Enter last name"
+          {...register("lastName")}
+          error={errors.lastName?.message}
+          className="transition-all duration-300 focus:ring-2 focus:ring-blue-500"
+        />
+        <Input
+          label="Email"
+          type="email"
+          placeholder="Enter email"
+          {...register("email")}
+          error={errors.email?.message}
+          className="transition-all duration-300 focus:ring-2 focus:ring-blue-500"
+        />
+        <Input
+          label="Phone Number"
+          type="tel"
+          placeholder="Enter phone number"
+          {...register("phoneNumber")}
+          error={errors.phoneNumber?.message}
+          className="transition-all duration-300 focus:ring-2 focus:ring-blue-500"
+        />
+        <div className="space-y-2">
+          <label className="block text-lg font-medium text-gray-700">
+            Gender
+          </label>
+          <select
+            {...register("gender")}
+            className="w-full p-3 border rounded-lg bg-gray-50 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          >
+            <option value="">Select Gender</option>
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+          </select>
+          {errors.gender && (
+            <p className="text-red-500 text-sm mt-1">{errors.gender.message}</p>
+          )}
+        </div>
+
+        <div className="flex space-x-4">
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-300"
+          >
+            {isSubmitting ? "Updating..." : "Update Employee"}
+          </Button>
+          <Button
+            type="button"
+            onClick={() => router.push("/employee/list")}
+            className="w-full bg-gray-300 text-gray-800 hover:bg-gray-400 transition-all duration-300"
+          >
+            Cancel
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 }

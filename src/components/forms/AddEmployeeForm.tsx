@@ -77,39 +77,45 @@ export default function AddEmployee() {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6">Add New Employee</h1>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="space-y-4 max-w-md mx-auto"
-      >
-        <Input
-          label="First Name"
-          type="text"
-          {...register("firstName")}
-          error={errors.firstName?.message}
-        />
-        <Input
-          label="Last Name"
-          type="text"
-          {...register("lastName")}
-          error={errors.lastName?.message}
-        />
-        <Input
-          label="Email"
-          type="email"
-          {...register("email")}
-          error={errors.email?.message}
-        />
-        <Input
-          label="Phone Number"
-          type="tel"
-          {...register("phoneNumber")}
-          error={errors.phoneNumber?.message}
-        />
-        <div>
-          <label className="block mb-2 font-medium">Gender</label>
-          <select {...register("gender")} className="w-full p-2 border rounded">
+    <div className="container mx-auto p-8 max-w-lg bg-white shadow-lg rounded-lg mt-10">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <div className="flex flex-col space-y-2">
+          <Input
+            label="First Name"
+            type="text"
+            {...register("firstName")}
+            error={errors.firstName?.message}
+            className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          />
+          <Input
+            label="Last Name"
+            type="text"
+            {...register("lastName")}
+            error={errors.lastName?.message}
+            className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          />
+          <Input
+            label="Email"
+            type="email"
+            {...register("email")}
+            error={errors.email?.message}
+            className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          />
+          <Input
+            label="Phone Number"
+            type="tel"
+            {...register("phoneNumber")}
+            error={errors.phoneNumber?.message}
+            className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          />
+        </div>
+
+        <div className="flex flex-col space-y-2">
+          <label className="font-medium text-gray-700">Gender</label>
+          <select
+            {...register("gender")}
+            className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          >
             <option value="">Select Gender</option>
             <option value="M">Male</option>
             <option value="F">Female</option>
@@ -119,26 +125,30 @@ export default function AddEmployee() {
           )}
         </div>
 
-        <div>
-          <label className="block mb-2 font-medium">Profile Picture</label>
+        <div className="flex flex-col space-y-2">
+          <label className="font-medium text-gray-700">Profile Picture</label>
           <input
             type="file"
             accept="image/*"
             onChange={handleProfilePictureChange}
-            className="w-full p-2 border rounded"
+            className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
           />
           {profilePicturePreview && (
-            <div className="mt-2">
+            <div className="mt-4 flex justify-center">
               <img
                 src={profilePicturePreview}
                 alt="Profile Preview"
-                className="w-32 h-32 object-cover rounded-full mx-auto"
+                className="w-32 h-32 object-cover rounded-full border-2 border-gray-300 shadow-md transition-all transform hover:scale-110"
               />
             </div>
           )}
         </div>
 
-        <Button type="submit" disabled={isSubmitting} className="w-full">
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+        >
           {isSubmitting ? "Adding..." : "Add Employee"}
         </Button>
       </form>
