@@ -3,7 +3,8 @@ name: Build
 on:
   push:
     branches:
-      - main
+      # - main
+      - feature/IG-493]employee-list-table
 
 jobs:
   build:
