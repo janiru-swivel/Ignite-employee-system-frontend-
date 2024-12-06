@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/redux/store";
-import { fetchEmployees } from "@/redux/features/employeeSlice";
+import { fetchEmployees, deleteEmployee } from "@/redux/features/employeeSlice";
 import { Employee } from "@/types/employee";
 import Link from "next/link";
 
@@ -17,6 +17,15 @@ export default function EmployeeListPage() {
   useEffect(() => {
     dispatch(fetchEmployees());
   }, [dispatch]);
+
+  const handleDelete = (id: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this employee?"
+    );
+    if (confirmDelete) {
+      dispatch(deleteEmployee(id));
+    }
+  };
 
   const renderListView = () => (
     <table className="w-full border-collapse">
@@ -51,7 +60,15 @@ export default function EmployeeListPage() {
               >
                 Edit
               </Link>
-              <button className="text-red-500">Delete</button>
+              <button
+                onClick={() => {
+                  if (employee._id) handleDelete(employee._id);
+                  else console.error("Employee ID is undefined");
+                }}
+                className="text-red-500"
+              >
+                Delete
+              </button>
             </td>
           </tr>
         ))}
@@ -80,17 +97,41 @@ export default function EmployeeListPage() {
             >
               Edit
             </Link>
-            <button className="text-red-500">Delete</button>
+            <button
+              onClick={() => {
+                if (employee._id) handleDelete(employee._id);
+                else console.error("Employee ID is undefined");
+              }}
+              className="text-red-500"
+            >
+              Delete
+            </button>
           </div>
         </div>
       ))}
     </div>
   );
 
-  // Rest of the component remains the same
   return (
     <div>
-      {/* Existing code for view mode toggle and status handling */}
+      <div className="mb-4">
+        <button
+          onClick={() => setViewMode("list")}
+          className={`px-4 py-2 mr-2 ${
+            viewMode === "list" ? "bg-blue-500 text-white" : "bg-gray-200"
+          }`}
+        >
+          List View
+        </button>
+        <button
+          onClick={() => setViewMode("grid")}
+          className={`px-4 py-2 ${
+            viewMode === "grid" ? "bg-blue-500 text-white" : "bg-gray-200"
+          }`}
+        >
+          Grid View
+        </button>
+      </div>
       {status === "loading" && <p>Loading...</p>}
       {status === "failed" && <p>Error: {error}</p>}
       {status === "succeeded" &&
