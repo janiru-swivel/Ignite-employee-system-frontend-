@@ -68,9 +68,9 @@ export default function EmployeeListPage() {
         </tr>
       </thead>
       <tbody>
-        {filteredEmployees.map((employee) => (
+        {filteredEmployees.map((employee, index) => (
           <tr
-            key={employee._id}
+            key={employee._id || index} // Fallback to `index` if `_id` is undefined
             className="hover:bg-gray-100 transition-all duration-300"
           >
             <td className="border p-4 text-center">
@@ -90,7 +90,7 @@ export default function EmployeeListPage() {
             <td className="border p-4 text-center">
               <Link
                 href={`/employee/edit/${employee._id}`}
-                className="text-blue-600 hover:text-blue-800 font-semibold transition duration-300"
+                className="px-3 py-1 border-2 border-blue-500 text-blue-500 font-semibold rounded-md transition duration-300 hover:bg-blue-500 hover:text-white"
               >
                 Edit
               </Link>
@@ -99,7 +99,7 @@ export default function EmployeeListPage() {
                   if (employee._id) handleDelete(employee._id);
                   else console.error("Employee ID is undefined");
                 }}
-                className="text-red-600 hover:text-red-800 ml-3 font-semibold transition duration-300"
+                className="ml-3 px-3 py-1 border-2 border-red-500 text-red-500 font-semibold rounded-md transition duration-300 hover:bg-red-500 hover:text-white"
               >
                 Delete
               </button>
@@ -115,7 +115,7 @@ export default function EmployeeListPage() {
       {filteredEmployees.map((employee) => (
         <div
           key={employee._id}
-          className="border rounded-lg shadow-xl bg-gradient-to-r from-green-400 to-blue-500 hover:scale-105 transition-all duration-300 overflow-hidden"
+          className="border rounded-lg shadow-xl bg-gradient-to-r from-green-200 to-grey-600 hover:scale-105 transition-all duration-300 overflow-hidden"
         >
           <img
             src={employee.profilePicture || "/default-profile.png"}
@@ -123,18 +123,18 @@ export default function EmployeeListPage() {
             className="w-32 h-32 object-cover rounded-full mx-auto mt-6 border-4 border-white shadow-md"
           />
           <div className="p-6 text-center space-y-4">
-            <h3 className="text-xl font-semibold text-white">
+            <h3 className="text-xl font-semibold text-black">
               {employee.firstName} {employee.lastName}
             </h3>
-            <p className="text-white text-opacity-80">{employee.email}</p>
-            <p className="text-white text-opacity-80">{employee.phoneNumber}</p>
-            <p className="text-white text-opacity-80">
+            <p className="text-black text-opacity-80">{employee.email}</p>
+            <p className="text-black text-opacity-80">{employee.phoneNumber}</p>
+            <p className="text-black text-opacity-80">
               {employee.gender === "M" ? "Male" : "Female"}
             </p>
             <div className="mt-4 flex justify-center space-x-6">
               <Link
                 href={`/employee/edit/${employee._id}`}
-                className="text-yellow-400 hover:text-yellow-500 font-semibold transition duration-300"
+                className="px-4 py-2 bg-gradient-to-r from-yellow-300 to-yellow-400 text-white font-semibold rounded-md shadow-lg hover:from-yellow-500 hover:to-yellow-600 transition duration-300"
               >
                 Edit
               </Link>
@@ -143,7 +143,7 @@ export default function EmployeeListPage() {
                   if (employee._id) handleDelete(employee._id);
                   else console.error("Employee ID is undefined");
                 }}
-                className="text-red-400 hover:text-red-500 font-semibold transition duration-300"
+                className="px-4 py-2 bg-gradient-to-r from-red-400 to-red-500 text-white font-semibold rounded-md shadow-lg hover:from-red-500 hover:to-red-700 transition duration-300"
               >
                 Delete
               </button>
