@@ -36,6 +36,7 @@ export default function EmployeeListPage() {
           <th className="border p-2">Last Name</th>
           <th className="border p-2">Email</th>
           <th className="border p-2">Phone Number</th>
+          <th className="border p-2">Gender</th>
           <th className="border p-2">Actions</th>
         </tr>
       </thead>
@@ -53,6 +54,9 @@ export default function EmployeeListPage() {
             <td className="border p-2">{employee.lastName}</td>
             <td className="border p-2">{employee.email}</td>
             <td className="border p-2">{employee.phoneNumber}</td>
+            <td className="border p-2">
+              {employee.gender === "M" ? "Male" : "Female"}
+            </td>
             <td className="border p-2 text-center">
               <Link
                 href={`/employee/edit/${employee._id}`}
@@ -90,6 +94,9 @@ export default function EmployeeListPage() {
           </h3>
           <p className="text-center">{employee.email}</p>
           <p className="text-center">{employee.phoneNumber}</p>
+          <p className="text-center">
+            {employee.gender === "M" ? "Male" : "Female"}
+          </p>
           <div className="mt-2 flex justify-center">
             <Link
               href={`/employee/edit/${employee._id}`}

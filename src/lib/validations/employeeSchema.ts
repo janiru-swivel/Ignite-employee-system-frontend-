@@ -24,22 +24,4 @@ export const employeeSchema = z.object({
   gender: z.enum(["M", "F"], {
     message: "Gender must be either 'M' for Male or 'F' for Female",
   }),
-
-  profilePicture: z
-    .instanceof(File)
-    .optional()
-    .refine((file) => !file || file.size <= 2 * 1024 * 1024, {
-      message: "Profile picture must be less than 2MB",
-    })
-    .refine(
-      (file) =>
-        !file ||
-        ["image/jpeg", "image/png", "image/jpg", "image/gif"].includes(
-          file.type
-        ),
-      {
-        message:
-          "Profile picture must be a valid image file (JPEG, PNG, JPG, GIF)",
-      }
-    ),
 });

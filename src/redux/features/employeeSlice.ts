@@ -33,7 +33,7 @@ export const deleteEmployee = createAsyncThunk(
   "employees/deleteEmployee",
   async (id: string, { rejectWithValue }) => {
     try {
-      await axios.delete(`http://localhost:8000/api/user/${id}`);
+      await axios.delete(`http://localhost:8000/api/delete/user/${id}`);
       return id;
     } catch (error: any) {
       return rejectWithValue(error.response?.data || "An error occurred");

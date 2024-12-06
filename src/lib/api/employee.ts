@@ -43,6 +43,6 @@ export const employeeApi = {
   },
 
   async deleteEmployee(id: string): Promise<void> {
-    await axios.delete(`${BASE_URL}/delete/user/${id}`);
+    await axios.delete(`${BASE_URL}/delete/user/:id${id}`);
   },
 };
