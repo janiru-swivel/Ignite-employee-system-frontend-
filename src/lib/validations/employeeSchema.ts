@@ -24,4 +24,11 @@ export const employeeSchema = z.object({
   gender: z.enum(["M", "F"], {
     message: "Gender must be either 'M' for Male or 'F' for Female",
   }),
+
+  createdAt: z
+    .string()
+    .refine((value) => !isNaN(Date.parse(value)), {
+      message: "Invalid date format for createdAt",
+    })
+    .optional(), // Optional if not always required during form submission
 });

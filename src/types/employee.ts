@@ -6,6 +6,7 @@ export interface Employee {
   phoneNumber: string;
   gender: "M" | "F";
   profilePicture?: string;
+  createdAt: string; // ISO string for timestamp
 }
 
 export interface EmployeeFormData {
