@@ -12,3 +12,13 @@ export default function EditEmployeePage({ params }: EditEmployeePageProps) {
     </div>
   );
 }
+
+// If using server-side data fetching
+export async function getServerSideProps(context: { params: { id: string } }) {
+  // Here you can fetch the necessary data for the employee
+  return {
+    props: {
+      params: context.params,
+    },
+  };
+}
