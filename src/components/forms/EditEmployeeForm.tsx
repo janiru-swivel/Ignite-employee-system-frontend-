@@ -11,8 +11,8 @@ import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { employeeApi } from "@/lib/api/employee";
 
-interface EditEmployeeFormProps {
-  readonly employeeId: string; // Marked as readonly
+export interface EditEmployeeFormProps {
+  employeeId: string;
 }
 
 export default function EditEmployeeForm({
@@ -32,7 +32,6 @@ export default function EditEmployeeForm({
     resolver: zodResolver(employeeSchema),
   });
 
-  // Fetch employee data by ID
   const fetchEmployeeData = async () => {
     try {
       setFetchError(false);
@@ -50,7 +49,6 @@ export default function EditEmployeeForm({
     }
   };
 
-  // Fetch employee data on component mount or when employeeId changes
   useEffect(() => {
     fetchEmployeeData();
   }, [employeeId, setValue]);
@@ -92,7 +90,7 @@ export default function EditEmployeeForm({
     <div className="container mx-auto p-6">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="space-y-6 max-w-lg mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-200 transition-all duration-300 hover:shadow-xl"
+        className="space-y-6 max-w-lg mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-200"
       >
         <label
           htmlFor="firstName"
@@ -101,13 +99,12 @@ export default function EditEmployeeForm({
           First Name
         </label>
         <Input
-          id="firstName" // Added id
+          id="firstName"
           label="First Name"
           type="text"
           placeholder="Enter first name"
           {...register("firstName")}
           error={errors.firstName?.message}
-          className="transition-all duration-300 focus:ring-2 focus:ring-blue-500"
         />
 
         <label
@@ -117,13 +114,12 @@ export default function EditEmployeeForm({
           Last Name
         </label>
         <Input
-          id="lastName" // Added id
+          id="lastName"
           label="Last Name"
           type="text"
           placeholder="Enter last name"
           {...register("lastName")}
           error={errors.lastName?.message}
-          className="transition-all duration-300 focus:ring-2 focus:ring-blue-500"
         />
 
         <label
@@ -133,13 +129,12 @@ export default function EditEmployeeForm({
           Email
         </label>
         <Input
-          id="email" // Added id
+          id="email"
           label="Email"
           type="email"
           placeholder="Enter email"
           {...register("email")}
           error={errors.email?.message}
-          className="transition-all duration-300 focus:ring-2 focus:ring-blue-500"
         />
 
         <label
@@ -149,48 +144,45 @@ export default function EditEmployeeForm({
           Phone Number
         </label>
         <Input
-          id="phoneNumber" // Added id
+          id="phoneNumber"
           label="Phone Number"
           type="tel"
           placeholder="Enter phone number"
           {...register("phoneNumber")}
           error={errors.phoneNumber?.message}
-          className="transition-all duration-300 focus:ring-2 focus:ring-blue-500"
         />
 
-        <div className="space-y-2">
-          <label
-            htmlFor="gender"
-            className="block text-lg font-medium text-gray-700"
-          >
-            Gender
-          </label>
-          <select
-            {...register("gender")}
-            id="gender" // Added id
-            className="w-full p-3 border rounded-lg bg-gray-50 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-          >
-            <option value="">Select Gender</option>
-            <option value="M">Male</option>
-            <option value="F">Female</option>
-          </select>
-          {errors.gender && (
-            <p className="text-red-500 text-sm mt-1">{errors.gender.message}</p>
-          )}
-        </div>
+        <label
+          htmlFor="gender"
+          className="block text-lg font-medium text-gray-700"
+        >
+          Gender
+        </label>
+        <select
+          {...register("gender")}
+          id="gender"
+          className="w-full p-3 border rounded-lg bg-gray-50 text-gray-700"
+        >
+          <option value="">Select Gender</option>
+          <option value="M">Male</option>
+          <option value="F">Female</option>
+        </select>
+        {errors.gender && (
+          <p className="text-red-500 text-sm mt-1">{errors.gender.message}</p>
+        )}
 
         <div className="flex space-x-4">
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all duration-300"
+            className="w-full bg-blue-600 text-white hover:bg-blue-700"
           >
             {isSubmitting ? "Updating..." : "Update Employee"}
           </Button>
           <Button
             type="button"
             onClick={() => router.push("/employee/list")}
-            className="w-full bg-gray-300 text-gray-800 hover:bg-gray-400 transition-all duration-300"
+            className="w-full bg-gray-300 text-gray-800 hover:bg-gray-400"
           >
             Cancel
           </Button>
