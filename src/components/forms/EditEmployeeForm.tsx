@@ -56,7 +56,8 @@ export default function EditEmployeeForm({
   const onSubmit = async (data: EmployeeFormData) => {
     setIsSubmitting(true);
     try {
-      await employeeApi.updateEmployee(employeeId, data);
+      // Updated URL for the employee update API
+      await employeeApi.updateEmployee(`/api/update/user/${employeeId}`, data);
       successToast("Employee updated successfully");
       router.push("/employee/list");
     } catch (error) {

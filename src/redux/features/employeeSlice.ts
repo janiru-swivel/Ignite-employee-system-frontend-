@@ -10,7 +10,7 @@ export const fetchEmployees = createAsyncThunk(
   "employees/fetchEmployees",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/users`);
+      const response = await axios.get(`${API_BASE_URL}api/users`);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(
@@ -25,7 +25,7 @@ export const addEmployee = createAsyncThunk(
   "employees/addEmployee",
   async (employee: FormData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/user`, employee, {
+      const response = await axios.post(`${API_BASE_URL}api/user`, employee, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -44,7 +44,7 @@ export const deleteEmployee = createAsyncThunk(
   "employees/deleteEmployee",
   async (id: string, { rejectWithValue }) => {
     try {
-      await axios.delete(`${API_BASE_URL}/delete/user/${id}`);
+      await axios.delete(`${API_BASE_URL}api/delete/user/${id}`);
       return id;
     } catch (error: any) {
       return rejectWithValue(
