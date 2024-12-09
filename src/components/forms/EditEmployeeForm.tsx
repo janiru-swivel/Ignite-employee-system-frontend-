@@ -17,7 +17,7 @@ export interface EditEmployeeFormProps {
 
 export default function EditEmployeeForm({
   employeeId,
-}: EditEmployeeFormProps) {
+}: Readonly<EditEmployeeFormProps>) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);

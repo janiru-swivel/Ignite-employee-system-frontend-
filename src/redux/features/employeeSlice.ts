@@ -2,12 +2,15 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Employee } from "@/types/employee";
 
+// Base URL from environment variable
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 // Fetch employees
 export const fetchEmployees = createAsyncThunk(
   "employees/fetchEmployees",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("http://localhost:8000/api/users");
+      const response = await axios.get(`${API_BASE_URL}/users`);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(
@@ -22,15 +25,11 @@ export const addEmployee = createAsyncThunk(
   "employees/addEmployee",
   async (employee: FormData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/user",
-        employee,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post(`${API_BASE_URL}/user`, employee, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       return response.data;
     } catch (error: any) {
       return rejectWithValue(
@@ -45,7 +44,7 @@ export const deleteEmployee = createAsyncThunk(
   "employees/deleteEmployee",
   async (id: string, { rejectWithValue }) => {
     try {
-      await axios.delete(`http://localhost:8000/api/delete/user/${id}`);
+      await axios.delete(`${API_BASE_URL}/delete/user/${id}`);
       return id;
     } catch (error: any) {
       return rejectWithValue(
