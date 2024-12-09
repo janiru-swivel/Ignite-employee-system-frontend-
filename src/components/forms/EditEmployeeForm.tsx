@@ -17,7 +17,7 @@ export interface EditEmployeeFormProps {
 
 export default function EditEmployeeForm({
   employeeId,
-}: EditEmployeeFormProps) {
+}: Readonly<EditEmployeeFormProps>) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -56,8 +56,7 @@ export default function EditEmployeeForm({
   const onSubmit = async (data: EmployeeFormData) => {
     setIsSubmitting(true);
     try {
-      // Updated URL for the employee update API
-      await employeeApi.updateEmployee(`/api/update/user/${employeeId}`, data);
+      await employeeApi.updateEmployee(employeeId, data);
       successToast("Employee updated successfully");
       router.push("/employee/list");
     } catch (error) {
