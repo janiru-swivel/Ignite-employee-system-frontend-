@@ -11,16 +11,19 @@ if (!BASE_URL) {
 }
 
 export const employeeApi = {
+  // Fetch all employees
   async getAllEmployees(): Promise<Employee[]> {
     const response = await axios.get(`${BASE_URL}/users`);
     return response.data;
   },
 
+  // Fetch an employee by ID
   async getEmployeeById(id: string): Promise<Employee> {
     const response = await axios.get(`${BASE_URL}/user/${id}`);
     return response.data;
   },
 
+  // Create a new employee
   async createEmployee(data: EmployeeFormData): Promise<Employee> {
     const formData = createFormData(data);
 
@@ -30,6 +33,7 @@ export const employeeApi = {
     return response.data.data;
   },
 
+  // Update an existing employee by ID
   async updateEmployee(id: string, data: EmployeeFormData): Promise<Employee> {
     const formData = createFormData(data);
 
@@ -43,6 +47,7 @@ export const employeeApi = {
     return response.data.data;
   },
 
+  // Delete an employee by ID
   async deleteEmployee(id: string): Promise<void> {
     await axios.delete(`${BASE_URL}/delete/user/${id}`);
   },

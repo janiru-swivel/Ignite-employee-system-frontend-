@@ -1,18 +1,21 @@
-import EditEmployeeForm from "@/components/forms/EditEmployeeForm";
+import React from "react";
+import EditEmployeeForm from "../../../../components/forms/EditEmployeeForm";
 
-export type PageProps = {
-  params: Promise<{
+interface PageProps {
+  params: {
     id: string;
-  }>;
-};
+  };
+}
 
-export default async function EditEmployeePage({ params }: PageProps) {
-  const { id } = await params;
+const EditEmployeePage: React.FC<PageProps> = ({ params }) => {
+  const employeeId = params.id;
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-center">Edit Employee</h1>
-      <EditEmployeeForm employeeId={id} />
+    <div>
+      <h1>Edit Employee</h1>
+      <EditEmployeeForm employeeId={employeeId} />
     </div>
   );
-}
+};
+
+export default EditEmployeePage;
