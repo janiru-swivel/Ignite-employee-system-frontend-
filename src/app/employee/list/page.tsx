@@ -1,18 +1,21 @@
 "use client";
-
+import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "@/redux/store";
-import { fetchEmployees, deleteEmployee } from "@/redux/features/employeeSlice";
+import { RootState, AppDispatch } from "../../../redux/store";
+import {
+  fetchEmployees,
+  deleteEmployee,
+} from "../../../redux/features/employeeSlice";
 import Link from "next/link";
 
 export default function EmployeeListPage() {
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
-  const [searchQuery, setSearchQuery] = useState(""); // For search
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc"); // Ascending or descending order
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [sortCriterion, setSortCriterion] = useState<"alphabetical" | "time">(
     "alphabetical"
-  ); // Sort criteria
+  );
 
   const dispatch = useDispatch<AppDispatch>();
   const { employees, status, error } = useSelector(
@@ -32,8 +35,8 @@ export default function EmployeeListPage() {
     }
   };
 
-  // Filter and sort employees
-  const filteredEmployees = employees
+  // Apply sorting and filtering logic dynamically
+  const sortedAndFilteredEmployees = [...employees]
     .filter((employee) =>
       `${employee.firstName} ${employee.lastName}`
         .toLowerCase()
@@ -51,13 +54,13 @@ export default function EmployeeListPage() {
         const dateB = new Date(b.createdAt).getTime();
         return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
       }
-      return 0; // Default case
+      return 0;
     });
 
   const renderListView = () => (
     <table className="w-full border-collapse table-auto shadow-lg bg-white rounded-lg">
       <thead>
-        <tr className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+        <tr className="bg-blue-600 text-white">
           <th className="border p-4 text-left">Profile</th>
           <th className="border p-4 text-left">First Name</th>
           <th className="border p-4 text-left">Last Name</th>
@@ -68,16 +71,16 @@ export default function EmployeeListPage() {
         </tr>
       </thead>
       <tbody>
-        {filteredEmployees.map((employee, index) => (
+        {sortedAndFilteredEmployees.map((employee, index) => (
           <tr
-            key={employee._id ?? index} // Fallback to `index` if `_id` is null or undefined
+            key={employee._id ?? index}
             className="hover:bg-gray-100 transition-all duration-300"
           >
             <td className="border p-4 text-center">
               <img
                 src={employee.profilePicture ?? "/default-profile.png"}
                 alt={`${employee.firstName} ${employee.lastName}`}
-                className="w-16 h-16 object-cover rounded-full mx-auto shadow-md"
+                className="w-16 h-16 object-cover rounded-full mx-auto"
               />
             </td>
             <td className="border p-4">{employee.firstName}</td>
@@ -90,16 +93,15 @@ export default function EmployeeListPage() {
             <td className="border p-4 text-center">
               <Link
                 href={`/employee/edit/${employee._id}`}
-                className="px-3 py-1 border-2 border-blue-500 text-blue-500 font-semibold rounded-md transition duration-300 hover:bg-blue-500 hover:text-white"
+                className="px-3 py-1 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-700"
               >
                 Edit
               </Link>
               <button
                 onClick={() => {
                   if (employee._id) handleDelete(employee._id);
-                  else console.error("Employee ID is undefined");
                 }}
-                className="ml-3 px-3 py-1 border-2 border-red-500 text-red-500 font-semibold rounded-md transition duration-300 hover:bg-red-500 hover:text-white"
+                className="ml-2 px-3 py-1 bg-red-500 text-white rounded-md shadow-md hover:bg-red-700"
               >
                 Delete
               </button>
@@ -112,48 +114,39 @@ export default function EmployeeListPage() {
 
   const renderGridView = () => (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-      {filteredEmployees.map((employee) => (
+      {sortedAndFilteredEmployees.map((employee) => (
         <div
           key={employee._id}
-          className="border rounded-lg shadow-xl bg-gradient-to-r from-green-200 to-grey-600 hover:scale-105 transition-all duration-300 overflow-hidden"
+          className="bg-gray-100 rounded-lg shadow-md p-6 hover:scale-105 transition-transform"
         >
           <img
-            src={employee?.profilePicture ?? "/default-profile.png"}
-            alt={
-              employee?.firstName && employee?.lastName
-                ? `${employee.firstName} ${employee.lastName}`
-                : "Default profile picture"
-            }
-            className="w-32 h-32 object-cover rounded-full mx-auto mt-6 border-4 border-white shadow-md"
-            loading="lazy"
+            src={employee.profilePicture ?? "/default-profile.png"}
+            alt={`${employee.firstName} ${employee.lastName}`}
+            className="w-24 h-24 object-cover rounded-full mx-auto mb-4"
           />
-
-          <div className="p-6 text-center space-y-4">
-            <h3 className="text-xl font-semibold text-black">
-              {employee.firstName} {employee.lastName}
-            </h3>
-            <p className="text-black text-opacity-80">{employee.email}</p>
-            <p className="text-black text-opacity-80">{employee.phoneNumber}</p>
-            <p className="text-black text-opacity-80">
-              {employee.gender === "M" ? "Male" : "Female"}
-            </p>
-            <div className="mt-4 flex justify-center space-x-6">
-              <Link
-                href={`/employee/edit/${employee._id}`}
-                className="px-4 py-2 bg-gradient-to-r from-yellow-300 to-yellow-400 text-white font-semibold rounded-md shadow-lg hover:from-yellow-500 hover:to-yellow-600 transition duration-300"
-              >
-                Edit
-              </Link>
-              <button
-                onClick={() => {
-                  if (employee._id) handleDelete(employee._id);
-                  else console.error("Employee ID is undefined");
-                }}
-                className="px-4 py-2 bg-gradient-to-r from-red-400 to-red-500 text-white font-semibold rounded-md shadow-lg hover:from-red-500 hover:to-red-700 transition duration-300"
-              >
-                Delete
-              </button>
-            </div>
+          <h3 className="text-xl font-semibold text-center mb-2">
+            {employee.firstName} {employee.lastName}
+          </h3>
+          <p className="text-center text-gray-600">{employee.email}</p>
+          <p className="text-center text-gray-600">{employee.phoneNumber}</p>
+          <p className="text-center text-gray-600">
+            {employee.gender === "M" ? "Male" : "Female"}
+          </p>
+          <div className="flex justify-center space-x-4 mt-4">
+            <Link
+              href={`/employee/edit/${employee._id}`}
+              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
+            >
+              Edit
+            </Link>
+            <button
+              onClick={() => {
+                if (employee._id) handleDelete(employee._id);
+              }}
+              className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-700"
+            >
+              Delete
+            </button>
           </div>
         </div>
       ))}
@@ -162,13 +155,13 @@ export default function EmployeeListPage() {
 
   return (
     <div className="p-8">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center mb-6">
         <input
           type="text"
           placeholder="Search by name..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="px-4 py-2 border rounded-lg shadow-md w-1/3"
+          className="w-1/3 p-2 border rounded-md shadow-sm"
         />
         <div className="flex items-center space-x-4">
           <select
@@ -176,7 +169,7 @@ export default function EmployeeListPage() {
             onChange={(e) =>
               setSortCriterion(e.target.value as "alphabetical" | "time")
             }
-            className="px-4 py-2 border rounded-lg shadow-md"
+            className="p-2 border rounded-md shadow-sm"
           >
             <option value="alphabetical">Sort Alphabetical</option>
             <option value="time">Sort By Time</option>
@@ -185,57 +178,50 @@ export default function EmployeeListPage() {
             onClick={() =>
               setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"))
             }
-            className="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-md transition-all duration-300"
+            className="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-700"
           >
-            Order: {sortOrder === "asc" ? "Ascending" : "Descending"}
+            {sortOrder === "asc"
+              ? sortCriterion === "time"
+                ? "Earliest to Latest"
+                : "A-Z"
+              : sortCriterion === "time"
+              ? "Latest to Earliest"
+              : "Z-A"}
           </button>
         </div>
       </div>
-      <div className="mb-8 flex space-x-8 justify-center">
+      <div className="flex justify-center space-x-4 mb-8">
         <button
           onClick={() => setViewMode("list")}
-          className={`flex items-center px-6 py-3 rounded-lg shadow-md transition-all duration-300 ${
-            viewMode === "list"
-              ? "bg-indigo-600 text-white hover:bg-indigo-700"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+          className={`px-4 py-2 rounded-md shadow-md ${
+            viewMode === "list" ? "bg-blue-500 text-white" : "bg-gray-200"
           }`}
         >
           List View
         </button>
         <button
           onClick={() => setViewMode("grid")}
-          className={`flex items-center px-6 py-3 rounded-lg shadow-md transition-all duration-300 ${
-            viewMode === "grid"
-              ? "bg-indigo-600 text-white hover:bg-indigo-700"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+          className={`px-4 py-2 rounded-md shadow-md ${
+            viewMode === "grid" ? "bg-blue-500 text-white" : "bg-gray-200"
           }`}
         >
           Grid View
         </button>
       </div>
-      {status === "loading" && (
-        <div className="text-center text-xl font-semibold text-gray-700">
-          Loading employees...
-        </div>
-      )}
+      {status === "loading" && <p className="text-center">Loading...</p>}
       {status === "failed" && (
-        <div className="text-center text-xl font-semibold text-red-500">
-          Error: {error}
-        </div>
+        <p className="text-center text-red-500">{error}</p>
       )}
-      {status === "succeeded" && (
-        <>
-          {filteredEmployees.length === 0 && (
-            <div className="text-center text-xl font-semibold text-gray-500">
-              No employees found.
-            </div>
-          )}
-
-          {filteredEmployees.length > 0 && (
-            <>{viewMode === "list" ? renderListView() : renderGridView()}</>
-          )}
-        </>
-      )}
+      {status === "succeeded" &&
+        (sortedAndFilteredEmployees.length > 0 ? (
+          viewMode === "list" ? (
+            renderListView()
+          ) : (
+            renderGridView()
+          )
+        ) : (
+          <p className="text-center">No employees found.</p>
+        ))}
     </div>
   );
 }

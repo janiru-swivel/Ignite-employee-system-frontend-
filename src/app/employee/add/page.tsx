@@ -1,4 +1,5 @@
-import AddEmployeeForm from "@/components/forms/AddEmployeeForm";
+import React from "react";
+import AddEmployeeForm from "../../../components/forms/AddEmployeeForm";
 
 export default function AddEmployeePage() {
   return (

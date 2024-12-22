@@ -1,15 +1,16 @@
 "use client";
+
 import React from "react";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { employeeSchema } from "../../lib/validations/employeeSchema";
-import { EmployeeFormData } from "../../types/employee";
+import { employeeSchema } from "../lib/validations/employeeSchema";
+import { EmployeeFormData } from "../types/employee";
 import { useRouter } from "next/navigation";
-import { successToast, errorToast } from "../../utils/toastConfig";
-import Input from "../../components/ui/Input";
-import Button from "../../components/ui/Button";
-import { employeeApi } from "../../lib/api/employee";
+import { successToast, errorToast } from "../utils/toastConfig";
+import Input from "../components/ui/Input";
+import Button from "../components/ui/Button";
+import { employeeApi } from "../lib/api/employee";
 
 export interface EditEmployeeFormProps {
   employeeId: string;

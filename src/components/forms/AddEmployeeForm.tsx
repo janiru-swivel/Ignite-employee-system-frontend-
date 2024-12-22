@@ -1,17 +1,17 @@
 "use client";
-
+import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { employeeSchema } from "@/lib/validations/employeeSchema";
-import { EmployeeFormData } from "@/types/employee";
+import { employeeSchema } from "../../lib/validations/employeeSchema";
+import { EmployeeFormData } from "../../types/employee";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/redux/store";
-import { addEmployee } from "@/redux/features/employeeSlice";
+import { AppDispatch } from "../../redux/store";
+import { addEmployee } from "../../redux/features/employeeSlice";
 import { useRouter } from "next/navigation";
-import { successToast, errorToast } from "@/utils/toastConfig";
-import Input from "@/components/ui/Input";
-import Button from "@/components/ui/Button";
+import { successToast, errorToast } from "../../utils/toastConfig";
+import Input from "../../components/ui/Input";
+import Button from "../../components/ui/Button";
 
 export default function AddEmployee() {
   const router = useRouter();
