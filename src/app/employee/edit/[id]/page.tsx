@@ -1,3 +1,4 @@
+import React from "react";
 import EditEmployeeForm from "@/components/forms/EditEmployeeForm";
 
 interface PageProps {
