@@ -1,3 +1,4 @@
+import React from "react";
 import EditEmployeeForm from "@/components/forms/EditEmployeeForm";
 
 export type PageProps = {
@@ -6,7 +7,9 @@ export type PageProps = {
   }>;
 };
 
-export default async function EditEmployeePage({ params }: PageProps) {
+export default async function EditEmployeePage({
+  params,
+}: Readonly<PageProps>) {
   const { id } = await params;
 
   return (
