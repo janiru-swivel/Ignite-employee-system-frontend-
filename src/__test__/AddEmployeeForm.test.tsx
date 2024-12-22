@@ -3,9 +3,9 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import userEvent from "@testing-library/user-event";
-import AddEmployee from "../AddEmployeeForm";
-import { addEmployee } from "@/redux/features/employeeSlice";
-import { successToast, errorToast } from "@/utils/toastConfig";
+import AddEmployee from "../components/forms/AddEmployeeForm";
+import { addEmployee } from "../redux/features/employeeSlice";
+import { successToast, errorToast } from "../utils/toastConfig";
 
 // Mock the dependencies
 jest.mock("next/navigation", () => ({
@@ -14,7 +14,7 @@ jest.mock("next/navigation", () => ({
   }),
 }));
 
-jest.mock("@/utils/toastConfig", () => ({
+jest.mock("../utils/toastConfig", () => ({
   successToast: jest.fn(),
   errorToast: jest.fn(),
 }));

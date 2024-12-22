@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Input from "../Input"; // Adjust the path to your component
+import Input from "../components/ui/Input"; // Adjust the path to your component
 import "@testing-library/jest-dom";
 
 describe("Input Component", () => {

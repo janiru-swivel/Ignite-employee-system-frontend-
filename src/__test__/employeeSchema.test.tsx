@@ -1,4 +1,4 @@
-import { employeeSchema } from "../employeeSchema";
+import { employeeSchema } from "../lib/validations/employeeSchema";
 import { z } from "zod";
 
 describe("Employee Schema Validation", () => {

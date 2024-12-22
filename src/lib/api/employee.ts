@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Employee, EmployeeFormData } from "@/types/employee";
+import { Employee, EmployeeFormData } from "../../types/employee";
 
 // Base URL is directly accessed from the environment variables
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;

@@ -1,9 +1,12 @@
 "use client";
-
+import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "@/redux/store";
-import { fetchEmployees, deleteEmployee } from "@/redux/features/employeeSlice";
+import { RootState, AppDispatch } from "../../../redux/store";
+import {
+  fetchEmployees,
+  deleteEmployee,
+} from "../../../redux/features/employeeSlice";
 import Link from "next/link";
 
 export default function EmployeeListPage() {

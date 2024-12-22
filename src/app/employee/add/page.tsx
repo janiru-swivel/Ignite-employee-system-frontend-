@@ -1,4 +1,4 @@
-import AddEmployeeForm from "@/components/forms/AddEmployeeForm";
+import AddEmployeeForm from "../../../components/forms/AddEmployeeForm";
 
 export default function AddEmployeePage() {
   return (

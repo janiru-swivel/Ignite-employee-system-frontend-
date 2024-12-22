@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Button from "../Button"; // Adjust path if necessary
+import Button from "../components/ui/Button"; // Adjust path if necessary
 import "@testing-library/jest-dom";
 
 describe("Button Component", () => {
