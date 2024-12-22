@@ -1,6 +1,5 @@
 "use client";
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { employeeSchema } from "../../lib/validations/employeeSchema";
@@ -41,9 +40,13 @@ export default function EditEmployeeForm({
       setValue("email", employee.email);
       setValue("phoneNumber", employee.phoneNumber);
       setValue("gender", employee.gender);
-    } catch (error) {
+    } catch (error: any) {
       setFetchError(true);
-      errorToast("Failed to load employee data");
+      if (error?.response?.data?.message) {
+        errorToast(error.response.data.message);
+      } else {
+        errorToast("Failed to load employee data");
+      }
     } finally {
       setLoading(false);
     }
@@ -51,7 +54,7 @@ export default function EditEmployeeForm({
 
   useEffect(() => {
     fetchEmployeeData();
-  }, [employeeId, setValue]);
+  }, [employeeId]);
 
   const onSubmit = async (data: EmployeeFormData) => {
     setIsSubmitting(true);
@@ -59,8 +62,8 @@ export default function EditEmployeeForm({
       await employeeApi.updateEmployee(employeeId, data);
       successToast("Employee updated successfully");
       router.push("/employee/list");
-    } catch (error) {
-      errorToast("Failed to update employee");
+    } catch (error: any) {
+      errorToast(error?.response?.data?.message || "Failed to update employee");
     } finally {
       setIsSubmitting(false);
     }
@@ -100,7 +103,6 @@ export default function EditEmployeeForm({
           {...register("firstName")}
           error={errors.firstName?.message}
         />
-
         <Input
           id="lastName"
           label="Last Name"
@@ -109,7 +111,6 @@ export default function EditEmployeeForm({
           {...register("lastName")}
           error={errors.lastName?.message}
         />
-
         <Input
           id="email"
           label="Email"
@@ -118,7 +119,6 @@ export default function EditEmployeeForm({
           {...register("email")}
           error={errors.email?.message}
         />
-
         <Input
           id="phoneNumber"
           label="Phone Number"
@@ -127,7 +127,6 @@ export default function EditEmployeeForm({
           {...register("phoneNumber")}
           error={errors.phoneNumber?.message}
         />
-
         <label
           htmlFor="gender"
           className="block text-lg font-medium text-gray-700"
