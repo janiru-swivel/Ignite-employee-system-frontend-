@@ -35,7 +35,7 @@ export default function EmployeeListPage() {
     }
   };
 
-  // Apply sorting and filtering logic dynamically
+  // Updated sorting and filtering logic
   const sortedAndFilteredEmployees = [...employees]
     .filter((employee) =>
       `${employee.firstName} ${employee.lastName}`
@@ -49,12 +49,12 @@ export default function EmployeeListPage() {
         return sortOrder === "asc"
           ? nameA.localeCompare(nameB)
           : nameB.localeCompare(nameA);
-      } else if (sortCriterion === "time") {
-        const dateA = new Date(a.createdAt).getTime();
-        const dateB = new Date(b.createdAt).getTime();
+      } else {
+        // Fixed time sorting logic
+        const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+        const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
         return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
       }
-      return 0;
     });
 
   const renderListView = () => (
@@ -67,6 +67,7 @@ export default function EmployeeListPage() {
           <th className="border p-4 text-left">Email</th>
           <th className="border p-4 text-left">Phone Number</th>
           <th className="border p-4 text-left">Gender</th>
+          <th className="border p-4 text-left">Created At</th>
           <th className="border p-4 text-left">Actions</th>
         </tr>
       </thead>
@@ -89,6 +90,11 @@ export default function EmployeeListPage() {
             <td className="border p-4">{employee.phoneNumber}</td>
             <td className="border p-4">
               {employee.gender === "M" ? "Male" : "Female"}
+            </td>
+            <td className="border p-4">
+              {employee.createdAt
+                ? new Date(employee.createdAt).toLocaleDateString()
+                : "N/A"}
             </td>
             <td className="border p-4 text-center">
               <Link
@@ -131,6 +137,12 @@ export default function EmployeeListPage() {
           <p className="text-center text-gray-600">{employee.phoneNumber}</p>
           <p className="text-center text-gray-600">
             {employee.gender === "M" ? "Male" : "Female"}
+          </p>
+          <p className="text-center text-gray-600">
+            Created:{" "}
+            {employee.createdAt
+              ? new Date(employee.createdAt).toLocaleDateString()
+              : "N/A"}
           </p>
           <div className="flex justify-center space-x-4 mt-4">
             <Link
